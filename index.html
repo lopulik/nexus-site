@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NEXUS.CC — Minecraft чит</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+      background: #000;
+      color: #ffffff;
+    }
+
+    #gradient-bg {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.25), transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(128, 0, 255, 0.25), transparent 50%);
+      animation: rotateBG 60s linear infinite;
+      z-index: -2;
+    }
+
+    @keyframes rotateBG {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 1;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      text-shadow: 0 0 15px #0ff, 0 0 30px #80f;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      color: #ccc;
+      text-shadow: 0 0 5px #00ffff66;
+    }
+
+    .btn {
+      padding: 15px 40px;
+      font-size: 18px;
+      background: linear-gradient(90deg, #0ff, #80f);
+      color: #000;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #0ff;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px #80f;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .footer a {
+      color: #0ff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- АНИМИРОВАННЫЙ ГРАДИЕНТНЫЙ ФОН -->
+  <div id="gradient-bg"></div>
+
+  <!-- ЗВЁЗДЫ -->
+  <canvas id="bg"></canvas>
+
+  <div class="container">
+    <h1>NEXUS.CC</h1>
+    <p>Лучший чит-клиент на Minecraft 1.16.5<br>Приватная разработка</p>
+    <button class="btn" onclick="window.location.href='NexusClient.zip'">⬇ Скачать чит</button>
+    <div class="footer">
+      <p><a href="https://t.me/NEXUSPena" target="_blank">Telegram</a></p>
+      <p>© 2025 NEXUS.CC</p>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let stars = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    function createStars() {
+      stars = [];
+      for (let i = 0; i < 300; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 1.5 + 0.5,
+          alpha: Math.random(),
+          delta: Math.random() * 0.02
+        });
+      }
+    }
+
+    function animateStars() {
+      ctx.clearRect(0, 0, width, height);
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.globalAlpha = star.alpha;
+        ctx.arc(star.x, star.y, star.r, 0, 2 * Math.PI);
+        ctx.fillStyle = '#0ff';
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#80f';
+        ctx.fill();
+        star.alpha += star.delta;
+        if (star.alpha <= 0 || star.alpha >= 1) {
+          star.delta = -star.delta;
+        }
+      }
+      requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      createStars();
+    });
+
+    resizeCanvas();
+    createStars();
+    animateStars();
+  </script>
+</body>
+</html>
